@@ -13,6 +13,7 @@ public abstract class Room {
     public Room(boolean isChargeable, boolean isReserved) {
         this.isChargeable = isChargeable;
         this.isReserved = isReserved;
+        this.guests = new ArrayList();
     }
 
     public boolean getIsChargeable(){
