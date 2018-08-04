@@ -2,20 +2,17 @@ package Guest;
 
 import Room.Room;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 public class Reservation {
 
-    private ArrayList<Guest> party;
+    private Party party;
     private Room room;
 
-    public Reservation(ArrayList<Guest> party, Room room){
+    public Reservation(Party party, Room room){
         this.party = party;
         this.room = room;
     }
 
-    public ArrayList<Guest> getparty(){
+    public Party getParty(){
         return this.party;
     }
 

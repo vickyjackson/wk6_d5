@@ -22,7 +22,7 @@ public class BedroomTest {
 
     @Test
     public void guestsStartsEmpty(){
-        assertEquals(0, bedroom1.getGuests().size());
+        assertEquals(0, bedroom1.getCheckedInGuests().size());
     }
 
 
@@ -59,6 +59,6 @@ public class BedroomTest {
     @Test
     public void canAddGuest(){
         bedroom1.addGuest(guest1);
-        assertEquals(1, bedroom1.getGuests().size());
+        assertEquals(1, bedroom1.getCheckedInGuests().size());
     }
 }

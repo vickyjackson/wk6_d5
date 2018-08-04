@@ -8,12 +8,12 @@ public abstract class Room {
 
     private boolean isChargeable;
     private boolean isReserved;
-    private ArrayList guests;
+    private ArrayList checkedInGuests;
 
     public Room(boolean isChargeable, boolean isReserved) {
         this.isChargeable = isChargeable;
         this.isReserved = isReserved;
-        this.guests = new ArrayList();
+        this.checkedInGuests = new ArrayList();
     }
 
     public boolean getIsChargeable(){
@@ -24,11 +24,11 @@ public abstract class Room {
         return this.isReserved;
     }
 
-    public ArrayList getGuests(){
-        return this.guests;
+    public ArrayList getCheckedInGuests(){
+        return this.checkedInGuests;
     }
 
     public void addGuest(Guest guest){
-        this.guests.add(guest);
+        this.checkedInGuests.add(guest);
     }
 }
