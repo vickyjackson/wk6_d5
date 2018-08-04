@@ -11,12 +11,14 @@ public class BedroomTest {
 
     private Bedroom bedroom1;
     private Bedroom bedroom2;
+    private Bedroom bedroom3;
     private Guest guest1;
 
     @Before
     public void before(){
         bedroom1 = new Bedroom(true, true, BedroomType.SINGLE, 1, 70);
         bedroom2 = new Bedroom(true, true, BedroomType.DOUBLE, 2, 90);
+        bedroom3 = new Bedroom(true, true, BedroomType.TWIN, 3, 80);
         guest1 = new Guest("Spongebob", "Squarepants", 6587);
     }
 
@@ -25,6 +27,16 @@ public class BedroomTest {
         assertEquals(0, bedroom1.getCheckedInGuests().size());
     }
 
+
+    @Test
+    public void canGetBedroomType(){
+        assertEquals(BedroomType.SINGLE, bedroom1.getBedroomType());
+    }
+
+    @Test
+    public void canGetBedroomCapacity(){
+        assertEquals(1, bedroom1.getBedroomCapacity());
+    }
 
     @Test
     public void canGetIsChargeable(){

@@ -14,10 +14,12 @@ public class RestaurantTest {
         restaurant1 = new Restaurant(false, false);
     }
 
+    @Test
     public void canGetIsChargeable(){
         assertEquals(false, restaurant1.getIsChargeable());
     }
 
+    @Test
     public void canGetIsReserved(){
         assertEquals(false, restaurant1.getIsReserved());
     }
