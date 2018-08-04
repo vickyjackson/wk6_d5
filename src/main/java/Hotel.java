@@ -56,13 +56,13 @@ public class Hotel {
     }
 
     public void checkInGuest(Guest guestToCheckIn){
-        Reservation reservationToFind = findReservation(guestToCheckIn);
-        if (reservationToFind == null){
+        Reservation foundReservation = findReservation(guestToCheckIn);
+        if (foundReservation == null){
             return;
         }
         else{
-            Room room = reservationToFind.getRoom();
-            for (Guest guest : reservationToFind.getParty().getGuests()) {
+            Room room = foundReservation.getRoom();
+            for (Guest guest : foundReservation.getParty().getGuests()) {
                 allCheckedInGuests.add(guest);
                 room.getCheckedInGuests().add(guest);
             }
@@ -72,4 +72,27 @@ public class Hotel {
     public ArrayList<Guest> getAllCheckedInGuests(){
         return this.allCheckedInGuests;
     }
+
+    public Guest findCheckedInGuest(Guest guestToFind){
+        for (Guest guest : allCheckedInGuests){
+            if (guest == guestToFind){
+                return guest;
+            }
+        }
+        return null;
+    }
+
+    public void checkOutGuest(Guest guestToCheckOut){
+        Guest foundGuest = findCheckedInGuest(guestToCheckOut);
+        Reservation foundReservation = findReservation(guestToCheckOut);
+        if (foundGuest == null){
+            return;
+        }
+        else if (foundGuest == guestToCheckOut){
+            Room room = foundReservation.getRoom();
+            allCheckedInGuests.remove(foundGuest);
+            room.getCheckedInGuests().remove(foundGuest);
+        }
+    }
 }
+

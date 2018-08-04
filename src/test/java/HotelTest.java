@@ -86,6 +86,8 @@ public class HotelTest {
         hotel1.checkInGuest(guest1);
         assertEquals(1, hotel1.getAllCheckedInGuests().size());
         assertEquals(guest1, hotel1.getAllCheckedInGuests().get(0));
+        assertEquals(1, bedroom1.getCheckedInGuests().size());
+        assertEquals(guest1, bedroom1.getCheckedInGuests().get(0));
     }
 
     @Test
@@ -97,5 +99,41 @@ public class HotelTest {
         assertEquals(2, hotel1.getAllCheckedInGuests().size());
         assertEquals(guest1, hotel1.getAllCheckedInGuests().get(0));
         assertEquals(guest2, hotel1.getAllCheckedInGuests().get(1));
+        assertEquals(2, bedroom2.getCheckedInGuests().size());
+        assertEquals(guest1, bedroom2.getCheckedInGuests().get(0));
+        assertEquals(guest2, bedroom2.getCheckedInGuests().get(1));
+    }
+
+    @Test
+    public void canGetCheckedInGetsByRoom(){
+        party2.addGuest(guest1);
+        party2.addGuest(guest2);
+        hotel1.addReservation(reservation2);
+        hotel1.checkInGuest(guest1);
+        assertEquals(2, bedroom2.getCheckedInGuests().size());
+        assertEquals(guest1, bedroom2.getCheckedInGuests().get(0));
+        assertEquals(guest2, bedroom2.getCheckedInGuests().get(1));
+    }
+
+    @Test
+    public void cantCheckInGuestsWithoutReservation(){
+        party2.addGuest(guest1);
+        hotel1.checkInGuest(guest1);
+        assertEquals(0, hotel1.getAllCheckedInGuests().size());
+        assertEquals(0, bedroom1.getCheckedInGuests().size());
+        assertEquals(0, bedroom2.getCheckedInGuests().size());
+    }
+
+    @Test
+    public void canCheckOutGuest(){
+        party1.addGuest(guest1);
+        hotel1.addReservation(reservation1);
+        hotel1.checkInGuest(guest1);
+        assertEquals(1, hotel1.getAllCheckedInGuests().size());
+        assertEquals(guest1, hotel1.getAllCheckedInGuests().get(0));
+
+        hotel1.checkOutGuest(guest1);
+        assertEquals(0, hotel1.getAllCheckedInGuests().size());
+        assertEquals(0, bedroom1.getCheckedInGuests().size());
     }
 }
