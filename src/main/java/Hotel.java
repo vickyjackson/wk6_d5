@@ -40,8 +40,14 @@ public class Hotel {
         return this.reservations;
     }
 
-    public void addReservation(Reservation reservation){
-        this.reservations.add(reservation);
+    public void createReservation(Reservation reservation){
+        if (reservation.getRoom().getIsReserved() == true ){
+            return;
+        }
+        else{
+            this.reservations.add(reservation);
+            reservation.getRoom().setIsReserved(true);
+        }
     }
 
     public Reservation findReservation(Guest guestToFind) {
@@ -92,7 +98,7 @@ public class Hotel {
             Room room = foundReservation.getRoom();
             allCheckedInGuests.remove(foundGuest);
             room.getCheckedInGuests().remove(foundGuest);
+            room.setIsReserved(false);
         }
     }
 }
-

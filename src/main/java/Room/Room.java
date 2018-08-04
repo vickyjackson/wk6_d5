@@ -31,4 +31,8 @@ public abstract class Room {
     public void addGuest(Guest guest){
         this.checkedInGuests.add(guest);
     }
+
+    public void setIsReserved(Boolean setToTrueOrFalse){
+        this.isReserved = setToTrueOrFalse;
+    }
 }
