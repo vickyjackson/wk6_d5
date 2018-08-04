@@ -24,14 +24,14 @@ public class PartyTest {
 
     @Test
     public void partyStartsEmpty(){
-        assertEquals(0, party1.getParty().size());
+        assertEquals(0, party1.getGuests().size());
     }
 
     @Test
     public void canAddGuest(){
         party1.addGuest(guest1);
-        assertEquals(1, party1.getParty().size());
-        assertEquals(guest1, party1.getParty().get(0));
+        assertEquals(1, party1.getGuests().size());
+        assertEquals(guest1, party1.getGuests().get(0));
     }
 
     @Test
@@ -39,29 +39,29 @@ public class PartyTest {
         party1.addGuest(guest1);
         party1.addGuest(guest2);
         party1.addGuest(guest3);
-        assertEquals(3, party1.getParty().size());
-        assertEquals(guest1, party1.getParty().get(0));
-        assertEquals(guest2, party1.getParty().get(1));
-        assertEquals(guest3, party1.getParty().get(2));
+        assertEquals(3, party1.getGuests().size());
+        assertEquals(guest1, party1.getGuests().get(0));
+        assertEquals(guest2, party1.getGuests().get(1));
+        assertEquals(guest3, party1.getGuests().get(2));
     }
 
     @Test
     public void canRemoveGuest(){
         party1.addGuest(guest1);
         party1.addGuest(guest2);
-        assertEquals(2, party1.getParty().size());
+        assertEquals(2, party1.getGuests().size());
         party1.removeGuest(guest1);
-        assertEquals(1, party1.getParty().size());
-        assertEquals(guest2, party1.getParty().get(0));
+        assertEquals(1, party1.getGuests().size());
+        assertEquals(guest2, party1.getGuests().get(0));
     }
 
     @Test
     public void canRemoveAllGuests(){
         party1.addGuest(guest1);
         party1.addGuest(guest2);
-        assertEquals(2, party1.getParty().size());
+        assertEquals(2, party1.getGuests().size());
         party1.removeAllGuests();
-        assertEquals(0, party1.getParty().size());
+        assertEquals(0, party1.getGuests().size());
     }
 
 }
