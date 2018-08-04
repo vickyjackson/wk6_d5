@@ -26,8 +26,8 @@ public class HotelTest {
         guest2 = new Guest("Patrick", "Star", 9745);
         party1 = new Party();
         party2 = new Party();
-        bedroom1 = new Bedroom(true, false, BedroomType.SINGLE, 1, 70);
-        bedroom2 = new Bedroom(true, false, BedroomType.DOUBLE, 2, 90);
+        bedroom1 = new Bedroom(true, BedroomType.SINGLE, 1, 70);
+        bedroom2 = new Bedroom(true, BedroomType.DOUBLE, 2, 90);
         reservation1 = new Reservation(party1, bedroom1);
         reservation2 = new Reservation(party2, bedroom2);
     }
@@ -143,5 +143,14 @@ public class HotelTest {
         hotel1.checkOutGuest(guest1);
         assertEquals(0, hotel1.getAllCheckedInGuests().size());
         assertEquals(0, bedroom1.getCheckedInGuests().size());
+    }
+
+    @Test
+    public void roomIsNotReservedIfEveryoneIsCheckedOut(){
+        party1.addGuest(guest1);
+        hotel1.createReservation(reservation1);
+        hotel1.checkInGuest(guest1);
+        hotel1.checkOutGuest(guest1);
+        assertEquals(false, reservation1.getRoom().getIsReserved());
     }
 }

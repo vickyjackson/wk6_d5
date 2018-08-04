@@ -16,9 +16,9 @@ public class BedroomTest {
 
     @Before
     public void before(){
-        bedroom1 = new Bedroom(true, true, BedroomType.SINGLE, 1, 70);
-        bedroom2 = new Bedroom(true, true, BedroomType.DOUBLE, 2, 90);
-        bedroom3 = new Bedroom(true, true, BedroomType.TWIN, 3, 80);
+        bedroom1 = new Bedroom(true, BedroomType.SINGLE, 1, 70);
+        bedroom2 = new Bedroom(true, BedroomType.DOUBLE, 2, 90);
+        bedroom3 = new Bedroom(true, BedroomType.TWIN, 3, 80);
         guest1 = new Guest("Spongebob", "Squarepants", 6587);
     }
 
@@ -45,7 +45,7 @@ public class BedroomTest {
 
     @Test
     public void canGetIsReserved(){
-        assertEquals(true, bedroom1.getIsReserved());
+        assertEquals(false, bedroom1.getIsReserved());
     }
 
     @Test

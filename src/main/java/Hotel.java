@@ -24,12 +24,12 @@ public class Hotel {
 
     public void populateRooms(){
         for (int i = 1; i < 11; i++ ){
-            this.rooms.add(new Bedroom(true, false, BedroomType.SINGLE, i, 70));
-            this.rooms.add(new Bedroom(true, false,BedroomType.DOUBLE, 10 + i, 90));
+            this.rooms.add(new Bedroom(true, BedroomType.SINGLE, i, 70));
+            this.rooms.add(new Bedroom(true,BedroomType.DOUBLE, 10 + i, 90));
         }
-        this.rooms.add(new ConferenceRoom(true, false,"The Small One", 120));
-        this.rooms.add(new ConferenceRoom(true, false,"The Big One", 150));
-        this.rooms.add(new Restaurant(false, false));
+        this.rooms.add(new ConferenceRoom(true,"The Small One", 120));
+        this.rooms.add(new ConferenceRoom(true,"The Big One", 150));
+        this.rooms.add(new Restaurant( false));
     }
 
     public void addRoom(Room room){

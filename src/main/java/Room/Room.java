@@ -10,9 +10,9 @@ public abstract class Room {
     private boolean isReserved;
     private ArrayList checkedInGuests;
 
-    public Room(boolean isChargeable, boolean isReserved) {
+    public Room(boolean isChargeable) {
         this.isChargeable = isChargeable;
-        this.isReserved = isReserved;
+        this.isReserved = false;
         this.checkedInGuests = new ArrayList();
     }
 

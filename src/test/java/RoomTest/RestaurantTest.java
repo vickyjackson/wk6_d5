@@ -11,7 +11,7 @@ public class RestaurantTest {
 
     @Before
     public void before(){
-        restaurant1 = new Restaurant(false, false);
+        restaurant1 = new Restaurant(false);
     }
 
     @Test

@@ -17,7 +17,7 @@ public class ReservationTest {
     @Before
     public void before(){
         party1 = new Party();
-        bedroom1 = new Bedroom(true, true, BedroomType.SINGLE, 1, 70);
+        bedroom1 = new Bedroom(true, BedroomType.SINGLE, 1, 70);
         reservation1 = new Reservation(party1, bedroom1);
     }
 
