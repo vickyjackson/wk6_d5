@@ -1,3 +1,6 @@
+package GuestTest;
+
+import Guest.Guest;
 import org.junit.*;
 
 import static org.junit.Assert.assertEquals;

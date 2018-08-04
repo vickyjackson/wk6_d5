@@ -7,8 +7,8 @@ public class ConferenceRoom extends Room {
     private String name;
     private double dailyRate;
 
-    public ConferenceRoom(boolean isChargeable, String name, double dailyRate){
-        super(isChargeable);
+    public ConferenceRoom(boolean isChargeable, boolean isReserved, String name, double dailyRate){
+        super(isChargeable, isReserved);
         this.name = name;
         this.dailyRate = dailyRate;
     }

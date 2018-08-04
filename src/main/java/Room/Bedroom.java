@@ -8,8 +8,8 @@ public class Bedroom extends Room {
     private BedroomType bedroomType;
     private int nightlyRate;
 
-    public Bedroom(boolean isChargeable, BedroomType bedroomType, int roomNumber, int nightlyRate){
-        super(isChargeable);
+    public Bedroom(boolean isChargeable, boolean isReserved, BedroomType bedroomType, int roomNumber, int nightlyRate){
+        super(isChargeable, isReserved);
         this.bedroomType = bedroomType;
         this.roomNumber = roomNumber;
         this.nightlyRate = nightlyRate;

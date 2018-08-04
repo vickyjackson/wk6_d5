@@ -11,11 +11,15 @@ public class RestaurantTest {
 
     @Before
     public void before(){
-        restaurant1 = new Restaurant(false);
+        restaurant1 = new Restaurant(false, false);
     }
 
     public void canGetIsChargeable(){
         assertEquals(false, restaurant1.getIsChargeable());
+    }
+
+    public void canGetIsReserved(){
+        assertEquals(false, restaurant1.getIsReserved());
     }
 
 }
