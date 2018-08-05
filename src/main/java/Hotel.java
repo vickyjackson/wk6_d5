@@ -50,8 +50,8 @@ public class Hotel {
             this.bedrooms.add(new Bedroom(true, BedroomType.SINGLE, i, 70));
             this.bedrooms.add(new Bedroom(true,BedroomType.DOUBLE, 10 + i, 90));
         }
-        this.conferenceRooms.add(new ConferenceRoom(true,"The Small One", 120));
-        this.conferenceRooms.add(new ConferenceRoom(true,"The Big One", 150));
+        this.conferenceRooms.add(new ConferenceRoom(true,"Squidward's House", 120));
+        this.conferenceRooms.add(new ConferenceRoom(true,"Pineapple Under the Sea", 150));
         this.restaurants.add(new Restaurant( false));
     }
 

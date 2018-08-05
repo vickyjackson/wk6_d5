@@ -29,5 +29,4 @@ public class GuestTest {
         assertEquals(3554, guest1.getCardNumberEndingIn());
     }
 
-
 }
