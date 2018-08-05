@@ -30,5 +30,4 @@ public class ReservationTest {
     public void canGetRoom(){
         assertEquals(bedroom1, reservation1.getRoom());
     }
-
 }

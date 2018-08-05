@@ -32,7 +32,7 @@ public abstract class Room {
         this.checkedInGuests.add(guest);
     }
 
-    public void setIsReserved(Boolean setToTrueOrFalse){
-        this.isReserved = setToTrueOrFalse;
+    public void setIsReserved(Boolean isReserved){
+        this.isReserved = isReserved;
     }
 }

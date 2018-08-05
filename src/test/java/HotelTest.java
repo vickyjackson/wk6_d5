@@ -3,6 +3,7 @@ import Guest.Party;
 import Guest.Reservation;
 import Room.Bedroom;
 import Room.BedroomType;
+import Room.ConferenceRoom;
 import org.junit.*;
 
 import static org.junit.Assert.assertEquals;
@@ -16,8 +17,7 @@ public class HotelTest {
     private Party party2;
     private Bedroom bedroom1;
     private Bedroom bedroom2;
-    private Reservation reservation1;
-    private Reservation reservation2;
+    private ConferenceRoom conferenceroom1;
 
     @Before
     public void before(){
@@ -28,29 +28,30 @@ public class HotelTest {
         party2 = new Party();
         bedroom1 = new Bedroom(true, BedroomType.SINGLE, 1, 70);
         bedroom2 = new Bedroom(true, BedroomType.DOUBLE, 2, 90);
-        reservation1 = new Reservation(party1, bedroom1);
-        reservation2 = new Reservation(party2, bedroom2);
+        conferenceroom1 = new ConferenceRoom(false,"Test", 100);
     }
 
     @Test
     public void roomsStartsPopulated(){
-        assertEquals(23, hotel1.getRooms().size());
+        assertEquals(20, hotel1.getBedrooms().size());
+        assertEquals(2, hotel1.getConferenceRooms().size());
+        assertEquals(1, hotel1.getRestaurants().size());
     }
 
     @Test
-    public void canAddRoom(){
+    public void canAddBedroom(){
         hotel1.addRoom(bedroom1);
-        assertEquals(24, hotel1.getRooms().size());
-        assertEquals(bedroom1, hotel1.getRooms().get(23));
+        assertEquals(21, hotel1.getBedrooms().size());
+        assertEquals(bedroom1, hotel1.getBedrooms().get(20));
     }
 
     @Test
     public void canAddMultipleRooms(){
         hotel1.addRoom(bedroom1);
         hotel1.addRoom(bedroom2);
-        assertEquals(25, hotel1.getRooms().size());
-        assertEquals(bedroom1, hotel1.getRooms().get(23));
-        assertEquals(bedroom2, hotel1.getRooms().get(24));
+        assertEquals(22, hotel1.getBedrooms().size());
+        assertEquals(bedroom1, hotel1.getBedrooms().get(20));
+        assertEquals(bedroom2, hotel1.getBedrooms().get(21));
     }
 
     @Test
@@ -62,24 +63,41 @@ public class HotelTest {
     public void canCreateReservation(){
         party1.addGuest(guest1);
         party1.addGuest(guest2);
-        hotel1.createReservation(reservation2);
+        hotel1.createReservation(party1, BedroomType.DOUBLE);
         assertEquals(1, hotel1.getReservations().size());
-        assertEquals(reservation2, hotel1.getReservations().get(0));
+    }
+
+    @Test
+    public void canGetAvailableSingleBedrooms(){
+        party1.addGuest(guest1);
+        hotel1.createReservation(party1, BedroomType.SINGLE);
+        assertEquals(1, hotel1.getReservations().size());
+        assertEquals(9, hotel1.getAvailableBedrooms(BedroomType.SINGLE).size());
+    }
+
+    @Test
+    public void canGetAvailableDoubleBedrooms(){
+        party1.addGuest(guest1);
+        party1.addGuest(guest2);
+        hotel1.createReservation(party1, BedroomType.DOUBLE);
+        assertEquals(1, hotel1.getReservations().size());
+        assertEquals(9, hotel1.getAvailableBedrooms(BedroomType.DOUBLE).size());
     }
 
     @Test
     public void roomIsReservedIfReservationWasCreated(){
         party1.addGuest(guest1);
         party1.addGuest(guest2);
-        hotel1.createReservation(reservation2);
-        assertEquals(true, reservation2.getRoom().getIsReserved());
+        hotel1.createReservation(party1, BedroomType.DOUBLE);
+        assertEquals(true, hotel1.getReservations().get(0).getRoom().getIsReserved());
     }
 
     @Test
     public void canFindReservation(){
         party2.addGuest(guest1);
-        hotel1.createReservation(reservation2);
-        assertEquals(reservation2, hotel1.findReservation(guest1));
+        hotel1.createReservation(party2, BedroomType.SINGLE);
+        Reservation reservation = hotel1.findReservation(guest1);
+        assertEquals(guest1, reservation.getParty().getGuests().get(0));
     }
 
     @Test
@@ -90,37 +108,37 @@ public class HotelTest {
     @Test
     public void canCheckInGuest(){
         party1.addGuest(guest1);
-        hotel1.createReservation(reservation1);
+        hotel1.createReservation(party1, BedroomType.SINGLE);
         hotel1.checkInGuest(guest1);
         assertEquals(1, hotel1.getAllCheckedInGuests().size());
         assertEquals(guest1, hotel1.getAllCheckedInGuests().get(0));
-        assertEquals(1, bedroom1.getCheckedInGuests().size());
-        assertEquals(guest1, bedroom1.getCheckedInGuests().get(0));
+        assertEquals(1, hotel1.findReservation(guest1).getRoom().getCheckedInGuests().size());
+        assertEquals(guest1, hotel1.findReservation(guest1).getRoom().getCheckedInGuests().get(0));
     }
 
     @Test
     public void canCheckInMultipleGuests(){
         party2.addGuest(guest1);
         party2.addGuest(guest2);
-        hotel1.createReservation(reservation2);
+        hotel1.createReservation(party2, BedroomType.DOUBLE);
         hotel1.checkInGuest(guest1);
         assertEquals(2, hotel1.getAllCheckedInGuests().size());
         assertEquals(guest1, hotel1.getAllCheckedInGuests().get(0));
         assertEquals(guest2, hotel1.getAllCheckedInGuests().get(1));
-        assertEquals(2, bedroom2.getCheckedInGuests().size());
-        assertEquals(guest1, bedroom2.getCheckedInGuests().get(0));
-        assertEquals(guest2, bedroom2.getCheckedInGuests().get(1));
+        assertEquals(2, hotel1.findReservation(guest1).getRoom().getCheckedInGuests().size());
+        assertEquals(guest1, hotel1.findReservation(guest1).getRoom().getCheckedInGuests().get(0));
+        assertEquals(guest2, hotel1.findReservation(guest1).getRoom().getCheckedInGuests().get(1));
     }
 
     @Test
     public void canGetCheckedInGetsByRoom(){
         party2.addGuest(guest1);
         party2.addGuest(guest2);
-        hotel1.createReservation(reservation2);
+        hotel1.createReservation(party2, BedroomType.DOUBLE);
         hotel1.checkInGuest(guest1);
-        assertEquals(2, bedroom2.getCheckedInGuests().size());
-        assertEquals(guest1, bedroom2.getCheckedInGuests().get(0));
-        assertEquals(guest2, bedroom2.getCheckedInGuests().get(1));
+        assertEquals(2, hotel1.findReservation(guest1).getRoom().getCheckedInGuests().size());
+        assertEquals(guest1, hotel1.findReservation(guest1).getRoom().getCheckedInGuests().get(0));
+        assertEquals(guest2, hotel1.findReservation(guest1).getRoom().getCheckedInGuests().get(1));
     }
 
     @Test
@@ -128,29 +146,27 @@ public class HotelTest {
         party2.addGuest(guest1);
         hotel1.checkInGuest(guest1);
         assertEquals(0, hotel1.getAllCheckedInGuests().size());
-        assertEquals(0, bedroom1.getCheckedInGuests().size());
-        assertEquals(0, bedroom2.getCheckedInGuests().size());
     }
 
     @Test
     public void canCheckOutGuest(){
         party1.addGuest(guest1);
-        hotel1.createReservation(reservation1);
+        hotel1.createReservation(party1, BedroomType.SINGLE);
         hotel1.checkInGuest(guest1);
         assertEquals(1, hotel1.getAllCheckedInGuests().size());
         assertEquals(guest1, hotel1.getAllCheckedInGuests().get(0));
 
         hotel1.checkOutGuest(guest1);
         assertEquals(0, hotel1.getAllCheckedInGuests().size());
-        assertEquals(0, bedroom1.getCheckedInGuests().size());
+        assertEquals(0, hotel1.findReservation(guest1).getRoom().getCheckedInGuests().size());
     }
 
     @Test
     public void roomIsNotReservedIfEveryoneIsCheckedOut(){
         party1.addGuest(guest1);
-        hotel1.createReservation(reservation1);
+        hotel1.createReservation(party1, BedroomType.SINGLE);
         hotel1.checkInGuest(guest1);
         hotel1.checkOutGuest(guest1);
-        assertEquals(false, reservation1.getRoom().getIsReserved());
+        assertEquals(false, hotel1.findReservation(guest1).getRoom().getIsReserved());
     }
 }

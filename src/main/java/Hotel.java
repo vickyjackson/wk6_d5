@@ -2,51 +2,81 @@ import Guest.Guest;
 import Room.*;
 
 import Guest.Reservation;
+import Guest.Party;
 
 import java.util.ArrayList;
 
 public class Hotel {
 
-    private ArrayList<Room> rooms;
+    private ArrayList<Room> allRooms;
+    private ArrayList<Bedroom> bedrooms;
+    private ArrayList<ConferenceRoom> conferenceRooms;
+    private ArrayList<Restaurant> restaurants;
     private ArrayList<Reservation> reservations;
     private ArrayList<Guest> allCheckedInGuests;
 
     public Hotel(){
-        this.rooms = new ArrayList<Room>();
+        this.allRooms = new ArrayList<Room>();
+        this.bedrooms = new ArrayList<Bedroom>();
+        this.conferenceRooms = new ArrayList<ConferenceRoom>();
+        this.restaurants = new ArrayList<Restaurant>();
         this.reservations = new ArrayList<Reservation>();
         this.allCheckedInGuests = new ArrayList<Guest>();
         populateRooms();
     }
 
-    public ArrayList getRooms(){
-        return this.rooms;
+    public ArrayList getAllRooms(){
+        this.allRooms.addAll(bedrooms);
+        this.allRooms.addAll(conferenceRooms);
+        this.allRooms.addAll(restaurants);
+        return this.allRooms;
+    }
+
+    public ArrayList getBedrooms(){
+        return this.bedrooms;
+    }
+
+    public ArrayList getConferenceRooms(){
+        return this.conferenceRooms;
+    }
+
+    public ArrayList getRestaurants(){
+        return this.restaurants;
     }
 
     public void populateRooms(){
         for (int i = 1; i < 11; i++ ){
-            this.rooms.add(new Bedroom(true, BedroomType.SINGLE, i, 70));
-            this.rooms.add(new Bedroom(true,BedroomType.DOUBLE, 10 + i, 90));
+
+            this.bedrooms.add(new Bedroom(true, BedroomType.SINGLE, i, 70));
+            this.bedrooms.add(new Bedroom(true,BedroomType.DOUBLE, 10 + i, 90));
         }
-        this.rooms.add(new ConferenceRoom(true,"The Small One", 120));
-        this.rooms.add(new ConferenceRoom(true,"The Big One", 150));
-        this.rooms.add(new Restaurant( false));
+        this.conferenceRooms.add(new ConferenceRoom(true,"The Small One", 120));
+        this.conferenceRooms.add(new ConferenceRoom(true,"The Big One", 150));
+        this.restaurants.add(new Restaurant( false));
     }
 
-    public void addRoom(Room room){
-        this.rooms.add(room);
+    public void addRoom(Bedroom room){
+        this.bedrooms.add(room);
+    }
+
+    public void addRoom(ConferenceRoom room){
+        this.conferenceRooms.add(room);
+    }
+
+    public void addRoom(Restaurant room){
+        this.restaurants.add(room);
     }
 
     public ArrayList<Reservation> getReservations(){
         return this.reservations;
     }
 
-    public void createReservation(Reservation reservation){
-        if (reservation.getRoom().getIsReserved() == true ){
-            return;
-        }
-        else{
-            this.reservations.add(reservation);
-            reservation.getRoom().setIsReserved(true);
+    public void createReservation(Party party, BedroomType bedroomType) {
+        if (getAvailableBedrooms(bedroomType).size() > 0) {
+            Bedroom selectedBedroom = getAvailableBedrooms(bedroomType).get(0);
+            selectedBedroom.setIsReserved(true);
+            Reservation newReservation = new Reservation(party, selectedBedroom) ;
+            this.reservations.add(newReservation);
         }
     }
 
@@ -100,5 +130,17 @@ public class Hotel {
             room.getCheckedInGuests().remove(foundGuest);
             room.setIsReserved(false);
         }
+    }
+
+    public ArrayList<Bedroom> getAvailableBedrooms(BedroomType bedroomType){
+        ArrayList availableBedrooms = new ArrayList<Bedroom>();
+        for (Bedroom room : bedrooms){
+            if (room.getIsReserved() == false){
+                if (room.getBedroomType() == bedroomType){
+                    availableBedrooms.add(room);
+                }
+            }
+        }
+        return availableBedrooms;
     }
 }
